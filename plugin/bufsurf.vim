@@ -34,6 +34,9 @@ function s:BufSurfBack()
         let s:disabled = 1
         execute "b " . w:history[w:history_index]
         let s:disabled = 0
+        if &ft ==# "netrw"
+          call s:BufSurfBack()
+        endif
     else
         call s:BufSurfEcho("reached start of window navigation history")
     endif
@@ -46,6 +49,9 @@ function s:BufSurfForward()
         let s:disabled = 1
         execute "b " . w:history[w:history_index]
         let s:disabled = 0
+        if &ft ==# "netrw"
+          call s:BufSurfForward()
+        endif
     else
         call s:BufSurfEcho("reached end of window navigation history")
     endif
@@ -59,6 +65,7 @@ function s:BufSurfAppend(bufnr)
     if s:BufSurfIsDisabled(a:bufnr)
         return
     endif
+
 
     " In case no navigation history exists for the current window, initialize
     " the navigation history.
